@@ -72,3 +72,42 @@ export function cartReducer(state, action) {
       return state;
   }
 }
+
+/**
+ * Calculates raw items total before tax, shipping, or discounts.
+ */
+export const selectCartSubtotal = (state) => {
+  return state.items.reduce((sum, item) => sum + item.price * item.qty, 0);
+};
+
+/**
+ * Calculates total discount amount based on active coupon.
+ */
+export const selectDiscountAmount =(state) =>{
+  if(!state.coupon) return 0;
+  const subtotal = selectCartSubtotal(state);
+  return (subtotal * state.coupon.discountPercent) / 100;
+}
+
+/**
+ * Calculates 18% GST (Tax) on subtotal after applying discount.
+ */
+export const selectTaxAmount =(state) =>{
+  const subtotal = selectCartSubtotal(state);
+  const discount = selectDiscountAmount(state);
+  const taxableAmount = Math.max(0, subtotal - discount);
+  return taxableAmount * 0.18; // 18% taxRate
+}
+
+/**
+ * Calculates final grand total including tax and shipping.
+ */
+export const selectGrandTotal = (state) =>{
+  if(state.items.length === 0) return 0;
+
+  const subtotal = selectCartSubtotal(state);
+  const discount = selectDiscountAmount(state);
+  const tax = selectTaxAmount(state);
+
+  return subtotal - discount + tax + state.shippingFee;
+}
