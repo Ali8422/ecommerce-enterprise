@@ -61,6 +61,13 @@ export function cartReducer(state, action) {
       };
     }
 
+    case "APPLY_COUPON": {
+      // payload structure: { code: 'SAVE10', discountPercent: 10 }
+      return {
+        ...state,
+        coupon: action.payload,
+      };
+    }
     default:
       return state;
   }
