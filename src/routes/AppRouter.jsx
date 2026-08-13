@@ -4,7 +4,7 @@ import { CatalogPage } from "@pages/CatalogPage";
 import { CartPage } from "@pages/CartPage";
 import { LoginPage } from "@pages/LoginPage";
 import { CheckoutPage } from "@pages/CheckoutPage";
-
+import { ProtectedRoute } from "./ProtectedRoute";
 export function AppRouter() {
   return (
     <Routes>
@@ -12,13 +12,20 @@ export function AppRouter() {
       <Route path="/" element={<RootLayout />}>
         {/* Redirect root URL to catalog */}
         <Route index element={<Navigate to="/catalog" replace />} />
-
-        {/* Main Application Routes */}
+        // Inside AppRouter component...
         <Route path="catalog" element={<CatalogPage />} />
         <Route path="cart" element={<CartPage />} />
         <Route path="login" element={<LoginPage />} />
-        <Route path="checkout" element={<CheckoutPage />} />
-
+        {/* Main Application Routes */}
+        {/* Guarded Route */}
+        <Route
+          path="checkout"
+          element={
+            <ProtectedRoute>
+              <CheckoutPage />
+            </ProtectedRoute>
+          }
+        />
         {/* 404 Fallback Route */}
         <Route
           path="*"

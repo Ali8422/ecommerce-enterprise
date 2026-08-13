@@ -1,5 +1,4 @@
 // src/pages/CatalogPage.jsx
-import React from "react";
 import { PRODUCTS } from "@services/productData";
 import { ProductCard } from "@components/features/catalog/ProductCard";
 

@@ -3,9 +3,8 @@ import { createContext, useReducer, useMemo, useContext } from "react";
 import { cartReducer, initialCartState } from "./cartReducer";
 
 // 1. Separate Contexts for State and Dispatch
-// eslint-disable-next-line react-refresh/only-export-components
+
 export const CartStateContext = createContext(null);
-// eslint-disable-next-line react-refresh/only-export-components
 export const CartDispatchContext = createContext(null);
 
 /**
@@ -29,7 +28,6 @@ export function CartProvider({ children }) {
 /**
  * Custom Hook: Consumes Cart State
  */
-// eslint-disable-next-line react-refresh/only-export-components
 export function useCartState() {
   const context = useContext(CartStateContext);
   if (context === null) {
